@@ -1,0 +1,47 @@
+name: flutter_cookbook
+description: A new Flutter project.
+
+publish_to: 'none' # Уберите эту строку, если публикуете приложение
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0' # Укажите версию Dart SDK
+
+dependencies:
+  flutter:
+    sdk: flutter
+  firebase_core: ^3.12.1
+  firebase_auth: ^5.5.1
+  google_sign_in: ^6.2.2
+  sign_in_with_apple: ^4.2.0
+  video_player: ^2.7.0 # Пакет для воспроизведения видео
+  shared_preferences: ^2.2.2 # Пакет для локального хранилища
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0 # Для анализа кода
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/videos/малина.mp4 # Видео заставка
+    - assets/images/5267235368422467596.jpg # Фото заставка
+    - assets/images/icons/apple_icons/icons8-apple-30.png # Иконки Apple при регистрации
+    - assets/images/icons/google_icons/Android/png@1x/dark/android_dark_rd_na@1x.png # Иконки Google при регистрации
+
+
+  fonts:
+    - family: GreatVibes-Regular # Шрифт для текста
+      fonts:
+        - asset: assets/fonts/GreatVibes-Regular.ttf
+
+    - family: ComforterBrush-Regular # Шрифт для текста
+      fonts:
+        - asset: assets/fonts/ComforterBrush-Regular.ttf
+
+    - family: MarckScript-Regular # Шрифт для текста
+      fonts:
+        - asset: assets/fonts/MarckScript-Regular.ttf

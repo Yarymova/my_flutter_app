@@ -1,0 +1,74 @@
+// Подключаем плагины
+plugins {
+    id "com.android.application" // Плагин для Android-приложений
+    apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+    id "kotlin-android"          // Плагин для поддержки Kotlin
+    id "com.google.gms.google-services" // Плагин для Google Services (Firebase)
+}
+
+// Чтение локальных свойств (например, путь к Flutter SDK)
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+// Получение пути к Flutter SDK
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+    throw new RuntimeException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+// Получение версии кода и имени версии из local.properties
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+// Настройки Android-приложения
+android {
+    namespace "com.example.flutter_cookbook" // Замените на ваш package name
+    compileSdk 34 // Убедитесь, что версия актуальна
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    defaultConfig {
+        applicationId "com.example.flutter_cookbook" // Замените на ваш package name
+        minSdk 21 // Минимальная версия SDK
+        targetSdk 34 // Целевая версия SDK
+        versionCode flutterVersionCode.toInteger() // Версия кода
+        versionName flutterVersionName // Версия приложения
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.debug // Используйте debug-ключи для тестирования
+        }
+    }
+}
+
+// Настройки Flutter
+flutter {
+    source '../..'
+}
+
+// Зависимости проекта
+dependencies {
+    implementation platform('com.google.firebase:firebase-bom:32.7.0') // Firebase BoM
+    implementation 'com.google.firebase:firebase-auth' // Firebase Authentication
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version" // Kotlin
+}
