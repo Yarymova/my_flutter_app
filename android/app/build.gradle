@@ -1,7 +1,6 @@
 // Подключаем плагины
 plugins {
     id "com.android.application" // Плагин для Android-приложений
-    apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
     id "kotlin-android"          // Плагин для поддержки Kotlin
     id "com.google.gms.google-services" // Плагин для Google Services (Firebase)
 }
@@ -35,7 +34,7 @@ if (flutterVersionName == null) {
 // Настройки Android-приложения
 android {
     namespace "com.example.flutter_cookbook" // Замените на ваш package name
-    compileSdk 34 // Убедитесь, что версия актуальна
+    compileSdkVersion 34 // Убедитесь, что версия актуальна
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -48,17 +47,23 @@ android {
 
     defaultConfig {
         applicationId "com.example.flutter_cookbook" // Замените на ваш package name
-        minSdk 21 // Минимальная версия SDK
-        targetSdk 34 // Целевая версия SDK
+        minSdkVersion 21 // Минимальная версия SDK
+        targetSdkVersion 34 // Целевая версия SDK
         versionCode flutterVersionCode.toInteger() // Версия кода
         versionName flutterVersionName // Версия приложения
     }
 
     buildTypes {
         release {
+            // Настройки для релизной сборки
             signingConfig signingConfigs.debug // Используйте debug-ключи для тестирования
+            minifyEnabled false // Отключите минификацию, если не используете ProGuard/R8
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    // Укажите версию NDK, если используете нативные библиотеки
+    ndkVersion "29.0.13113456" // Укажите вашу версию NDK
 }
 
 // Настройки Flutter
