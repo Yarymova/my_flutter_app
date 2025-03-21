@@ -58,8 +58,8 @@ add_subdirectory("runner")
 include(flutter/generated_plugins.cmake)
 
 # === Firebase C++ SDK Integration ===
-# Указываем путь к Firebase C++ SDK
-set(FIREBASE_CPP_SDK_DIR "${CMAKE_CURRENT_SOURCE_DIR}/build/windows/x64/extracted/firebase_cpp_sdk_windows")
+# Указываем абсолютный путь к Firebase C++ SDK
+set(FIREBASE_CPP_SDK_DIR "C:/Users/KUKURUZA/Desktop/cookbook/firebase_cpp_sdk")
 
 # Проверяем, существует ли Firebase C++ SDK
 if(NOT EXISTS "${FIREBASE_CPP_SDK_DIR}/CMakeLists.txt")
