@@ -23,6 +23,7 @@ else()
       "Debug" "Profile" "Release")
   endif()
 endif()
+
 # Define settings for the Profile build mode.
 set(CMAKE_EXE_LINKER_FLAGS_PROFILE "${CMAKE_EXE_LINKER_FLAGS_RELEASE}")
 set(CMAKE_SHARED_LINKER_FLAGS_PROFILE "${CMAKE_SHARED_LINKER_FLAGS_RELEASE}")
@@ -52,11 +53,27 @@ add_subdirectory(${FLUTTER_MANAGED_DIR})
 # Application build; see runner/CMakeLists.txt.
 add_subdirectory("runner")
 
-
 # Generated plugin build rules, which manage building the plugins and adding
 # them to the application.
 include(flutter/generated_plugins.cmake)
 
+# === Firebase C++ SDK Integration ===
+# Указываем путь к Firebase C++ SDK
+set(FIREBASE_CPP_SDK_DIR "${CMAKE_CURRENT_SOURCE_DIR}/build/windows/x64/extracted/firebase_cpp_sdk_windows")
+
+# Проверяем, существует ли Firebase C++ SDK
+if(NOT EXISTS "${FIREBASE_CPP_SDK_DIR}/CMakeLists.txt")
+    message(FATAL_ERROR "Firebase C++ SDK не найден по пути: ${FIREBASE_CPP_SDK_DIR}")
+endif()
+
+# Подключаем Firebase C++ SDK
+add_subdirectory("${FIREBASE_CPP_SDK_DIR}" "${CMAKE_BINARY_DIR}/firebase_cpp_sdk")
+
+# Подключаем зависимости Firebase
+target_link_libraries(${BINARY_NAME} PRIVATE firebase_app firebase_auth)
+
+# Указываем путь к заголовочным файлам Firebase
+target_include_directories(${BINARY_NAME} PRIVATE "${FIREBASE_CPP_SDK_DIR}/include")
 
 # === Installation ===
 # Support files are copied into place next to the executable, so that it can
